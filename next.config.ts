@@ -1,10 +1,20 @@
 import type { NextConfig } from "next";
+import { BASE_PATH } from "./lib/base-path";
 
 const developmentEval = process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
 
 const nextConfig: NextConfig = {
+  basePath: BASE_PATH,
   devIndicators: false,
   output: "standalone",
+  outputFileTracingExcludes: {
+    "/*": [
+      "./data/*.sqlite",
+      "./data/*.sqlite-*",
+      "./data/suppressions.json",
+      "./data/location-overrides.json"
+    ]
+  },
   poweredByHeader: false,
   serverExternalPackages: ["better-sqlite3"],
   async headers() {

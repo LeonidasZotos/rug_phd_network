@@ -7,6 +7,7 @@ import { groupByLocation, initials, searchPeople } from "@/lib/client-data";
 import { INSTITUTES } from "@/lib/institutes";
 import { INSTITUTE_CODES, type InstituteCode, type LocationGroup, type PublicDataset, type PublicPerson } from "@/lib/types";
 import { ProfilePanel } from "@/components/profile-panel";
+import { withBasePath } from "@/lib/base-path";
 
 const NetworkMap = dynamic(() => import("@/components/network-map").then((mod) => mod.NetworkMap), {
   ssr: false,
@@ -33,7 +34,7 @@ export function NetworkExplorer({ initialDataset }: { initialDataset: PublicData
     const controller = new AbortController();
     async function refresh() {
       try {
-        const response = await fetch("/api/people", {
+        const response = await fetch(withBasePath("/api/people"), {
           cache: "no-store",
           signal: controller.signal,
           headers: etag ? { "If-None-Match": etag } : undefined

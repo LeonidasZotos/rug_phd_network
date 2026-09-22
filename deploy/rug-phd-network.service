@@ -2,6 +2,9 @@
 Description=RUG PhD Network Map
 After=network-online.target
 Wants=network-online.target
+ConditionPathExists=/opt/rug-phd-network/current/server.js
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 Type=simple
@@ -9,23 +12,34 @@ User=rug-phd-network
 Group=rug-phd-network
 WorkingDirectory=/opt/rug-phd-network/current
 Environment=NODE_ENV=production
+Environment=NEXT_TELEMETRY_DISABLED=1
 Environment=PORT=3000
 Environment=HOSTNAME=127.0.0.1
-Environment=DATA_DIR=/var/lib/rug-phd-network
 EnvironmentFile=/etc/rug-phd-network/environment
-ExecStart=/usr/bin/npm start
+ExecStart=/opt/nodejs/current/bin/node /opt/rug-phd-network/current/server.js
 Restart=on-failure
 RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+UMask=0027
 StateDirectory=rug-phd-network
 StateDirectoryMode=0750
 NoNewPrivileges=true
 PrivateTmp=true
+PrivateDevices=true
 ProtectSystem=strict
 ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
 ReadWritePaths=/var/lib/rug-phd-network
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 RestrictSUIDSGID=true
 LockPersonality=true
 MemoryDenyWriteExecute=false
+CapabilityBoundingSet=
+AmbientCapabilities=
 
 [Install]
 WantedBy=multi-user.target

@@ -5,6 +5,7 @@ import * as maplibregl from "maplibre-gl";
 import type { GeoJSONSource, Map as MapLibreMap, Marker } from "maplibre-gl";
 import { MapPin, RotateCcw, Users } from "lucide-react";
 import { initials } from "@/lib/client-data";
+import { withBasePath } from "@/lib/base-path";
 import type { LocationGroup, PublicPerson } from "@/lib/types";
 
 type Props = {
@@ -16,7 +17,7 @@ type Props = {
 };
 
 const SOURCE_ID = "phd-cities";
-const MAPLIBRE_WORKER_URL = "/maplibre/maplibre-gl-worker.mjs";
+const MAPLIBRE_WORKER_URL = withBasePath("/maplibre/maplibre-gl-worker.mjs");
 const MAP_LOAD_TIMEOUT_MS = 12_000;
 const FALLBACK_STYLE: maplibregl.StyleSpecification = {
   version: 8,
