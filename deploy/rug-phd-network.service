@@ -1,0 +1,31 @@
+[Unit]
+Description=RUG PhD Network Map
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=rug-phd-network
+Group=rug-phd-network
+WorkingDirectory=/opt/rug-phd-network/current
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOSTNAME=127.0.0.1
+Environment=DATA_DIR=/var/lib/rug-phd-network
+EnvironmentFile=/etc/rug-phd-network/environment
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=5
+StateDirectory=rug-phd-network
+StateDirectoryMode=0750
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/rug-phd-network
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+
+[Install]
+WantedBy=multi-user.target

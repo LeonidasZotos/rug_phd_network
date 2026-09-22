@@ -1,0 +1,41 @@
+{
+  "name": "rug-phd-network",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "predev": "node scripts/copy-maplibre-worker.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/copy-maplibre-worker.mjs",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "sync": "node --conditions=react-server --import tsx scripts/sync.ts",
+    "sync:dry-run": "node --conditions=react-server --import tsx scripts/sync.ts --dry-run"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "fuse.js": "^7.1.0",
+    "lucide-react": "^0.544.0",
+    "maplibre-gl": "6.10.0",
+    "next": "16.3.5",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "server-only": "^0.0.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^5.0.1"
+  }
+}
