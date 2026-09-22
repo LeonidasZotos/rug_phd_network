@@ -65,8 +65,18 @@ describe("locations", () => {
     expect(parseLocation("Washington, D.C., USA")).toEqual({ city: "Washington, D.C.", country: "United States", key: "washington, d.c.|united states" });
   });
 
+  it("resolves reviewed New York aliases without guessing other standalone cities", () => {
+    const expected = { city: "New York", country: "United States", key: "new york|united states" };
+    expect(parseLocation("New York")).toEqual(expected);
+    expect(parseLocation("New York City")).toEqual(expected);
+    expect(parseLocation("NYC")).toEqual(expected);
+    expect(parseLocation("New York, NY")).toEqual(expected);
+    expect(parseLocation("Springfield")).toBeUndefined();
+  });
+
   it("normalizes standalone home-country aliases", () => {
     expect(normalizeCountry("The Netherlands")).toBe("Netherlands");
+    expect(normalizeCountry("US")).toBe("United States");
     expect(normalizeCountry("Greece")).toBe("Greece");
     expect(normalizeCountry(" ")).toBeUndefined();
   });

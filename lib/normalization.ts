@@ -118,9 +118,19 @@ const COUNTRY_ALIASES = new Map([
   ["uk", "United Kingdom"],
   ["u.k.", "United Kingdom"],
   ["united kingdom", "United Kingdom"],
+  ["us", "United States"],
+  ["u.s.", "United States"],
   ["usa", "United States"],
   ["u.s.a.", "United States"],
   ["united states of america", "United States"]
+]);
+
+const LOCATION_ALIASES = new Map<string, { city: string; country: string }>([
+  ["new york", { city: "New York", country: "United States" }],
+  ["new york city", { city: "New York", country: "United States" }],
+  ["nyc", { city: "New York", country: "United States" }],
+  ["new york, ny", { city: "New York", country: "United States" }],
+  ["new york, new york", { city: "New York", country: "United States" }]
 ]);
 
 export function normalizeCountry(value: unknown): string | undefined {
@@ -131,6 +141,13 @@ export function normalizeCountry(value: unknown): string | undefined {
 
 export function parseLocation(value: unknown): { city: string; country: string; key: string } | undefined {
   const text = cleanText(value, 180);
+  const alias = LOCATION_ALIASES.get(foldText(text));
+  if (alias) {
+    return {
+      ...alias,
+      key: `${foldText(alias.city)}|${foldText(alias.country)}`
+    };
+  }
   const separator = text.lastIndexOf(",");
   if (separator <= 0 || separator >= text.length - 1) return undefined;
   const city = cleanText(text.slice(0, separator), 90);

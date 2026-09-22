@@ -21,6 +21,7 @@ Restart=on-failure
 RestartSec=5
 TimeoutStopSec=30
 KillSignal=SIGTERM
+SuccessExitStatus=143
 UMask=0027
 StateDirectory=rug-phd-network
 StateDirectoryMode=0750

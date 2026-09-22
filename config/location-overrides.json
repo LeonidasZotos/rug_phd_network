@@ -2,5 +2,9 @@
   "groningen|netherlands": {
     "latitude": 53.2194,
     "longitude": 6.5665
+  },
+  "new york|united states": {
+    "latitude": 40.7128,
+    "longitude": -74.006
   }
 }
